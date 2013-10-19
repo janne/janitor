@@ -18,8 +18,8 @@ written in Javascript, in the form of plugins.
 
 A major principle concept in Janitor is Layers (thank you [Gary
 Bernhardt](https://www.destroyallsoftware.com/talks/a-whole-new-world)). A
-layer is modification of the representation of the current file. Some examples
-of possible layers are:
+layer is a modification of the representation of the current file. Some
+examples of possible layers are:
 
 - Syntax highlighting
 - Line numbers
