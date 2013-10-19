@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 )
 
 var buffers []Buffer
@@ -18,16 +17,10 @@ func main() {
 
 func parseArgs() error {
 	flag.Parse()
-	if len(flag.Args()) > 0 {
-		for _, file := range flag.Args() {
-			if buffer, err := BufferFromFile(file); err != nil {
-				return err
-			} else {
-				buffers = append(buffers, buffer)
-			}
-		}
+	if bufs, err := BuffersFromFiles(flag.Args()); err != nil {
+		return err
 	} else {
-		buffers = append(buffers, Buffer{})
+		buffers = append(buffers, bufs...)
 	}
 	return nil
 }

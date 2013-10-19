@@ -19,6 +19,22 @@ func BufferFromFile(file string) (Buffer, error) {
 	return Buffer{lines}, nil
 }
 
+func BuffersFromFiles(files []string) ([]Buffer, error) {
+	buffers := make([]Buffer, 0)
+	if len(files) > 0 {
+		for _, file := range files {
+			if buffer, err := BufferFromFile(file); err != nil {
+				return nil, err
+			} else {
+				buffers = append(buffers, buffer)
+			}
+		}
+	} else {
+		buffers = append(buffers, Buffer{})
+	}
+	return buffers, nil
+}
+
 func (b Buffer) Line(line int) (string, error) {
 	if line < 1 || line >= len(b.lines) {
 		return "", fmt.Errorf("Line index out of range")
