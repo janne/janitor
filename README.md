@@ -1,15 +1,14 @@
 Janitor
 =======
 
-A modern, modal editor.
+- J is for Javascript.
+- Jan is for [Janne](http://www.github.com/janne/).
+- Janitor is for modal editing.
 
-Ja is for Javascript.
-
-Jan is for [Janne](http://www.github.com/janne/).
 
 Overview
 --------
-Janitor is a modal editor, just like Vim, but the similarities end there.
+Janitor is a modal editor, just like Vim, but the similarity end there.
 
 The core of Janitor is built in [Go](http://golang.org/) but, just as the web
 browser, it is scripted in Javascript. It has a Javascript console built in for
