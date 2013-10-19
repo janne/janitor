@@ -10,6 +10,8 @@ type Buffer struct {
 	lines []string
 }
 
+type Buffers []Buffer
+
 func BufferFromFile(file string) (Buffer, error) {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -19,8 +21,8 @@ func BufferFromFile(file string) (Buffer, error) {
 	return Buffer{lines}, nil
 }
 
-func BuffersFromFiles(files []string) ([]Buffer, error) {
-	buffers := make([]Buffer, 0)
+func BuffersFromFiles(files []string) (Buffers, error) {
+	buffers := Buffers{}
 	if len(files) > 0 {
 		for _, file := range files {
 			if buffer, err := BufferFromFile(file); err != nil {
@@ -44,4 +46,13 @@ func (b Buffer) Line(line int) (string, error) {
 
 func (b Buffer) Count() int {
 	return len(b.lines)
+}
+
+func (b Buffers) Sync() error {
+	if v, err := JS.ToValue(buffers); err != nil {
+		return err
+	} else {
+		JS.Set("buffers", v)
+	}
+	return nil
 }
