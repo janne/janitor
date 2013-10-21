@@ -16,6 +16,9 @@ func main() {
 	JS.Run(`
 	console.log("Welcome to Janitor!")
 	console.log("We have " + buffers.length + " buffers")
+	for(i=0; i < buffers.length; i++) {
+		console.log(buffers[i].Num + ": " + buffers[i].Name)
+	}
 	`)
 }
 
