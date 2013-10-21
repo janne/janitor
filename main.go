@@ -21,11 +21,10 @@ func main() {
 
 func parseArgs() error {
 	flag.Parse()
-	if bufs, err := BuffersFromFiles(flag.Args()); err != nil {
+	var err error
+	if buffers, err = BuffersFromFiles(flag.Args()...); err != nil {
 		return err
-	} else {
-		buffers = append(buffers, bufs...)
-		buffers.Sync()
 	}
+	buffers.Sync(JS)
 	return nil
 }

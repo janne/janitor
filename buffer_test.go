@@ -1,17 +1,36 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"github.com/robertkrimen/otto"
+)
+
+func TestBuffersFromFiles(t *testing.T) {
+	buffers, _ := BuffersFromFiles("fixtures/fixture.txt")
+	buffer := buffers[0]
+	if buffer.Name != "fixtures/fixture.txt" {
+		t.Errorf("Was supposed to be 'fixtures/fixture.txt' but was '%v'", buffer.Name)
+	}
+}
 
 func TestBufferLine(t *testing.T) {
-	buffer, _ := BufferFromFile("fixtures/fixture.txt")
+	buffers, _ := BuffersFromFiles("fixtures/fixture.txt")
+	buffer := buffers[0]
 	if line, err := buffer.Line(1); err != nil || line != "Hello" {
 		t.Errorf("Was supposed to be %v but was %v, error: %v", "Hello", line, err)
 	}
 }
 
-func TestBufferCount(t *testing.T) {
-	buffer, _ := BufferFromFile("fixtures/fixture.txt")
-	if count := buffer.Count(); count != 4 {
-		t.Errorf("Was supposed to be 4 but was %v", count)
+func TestBuffersSync(t *testing.T) {
+	JS := otto.New()
+	buffers, _ := BuffersFromFiles("fixtures/fixture.txt")
+	buffers.Sync(JS)
+	value, _ := JS.Run(`buffers.length`)
+	if value, _ := value.ToInteger(); value != 1 {
+		t.Errorf("Expected 1, got %v\n", value)
+	}
+	value, _ = JS.Run(`buffers[0].Name`)
+	if value, _ := value.ToString(); value != "fixtures/fixture.txt" {
+		t.Errorf("Expected 'fixtures/fixture.txt', got '%v'\n", value)
 	}
 }
